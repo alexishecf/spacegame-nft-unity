@@ -16,6 +16,8 @@ public class FPSController : MonoBehaviour
     [SerializeField] float lookSpeed = 2.0f;
     [SerializeField] float lookXLimit = 45.0f;
 
+    [SerializeField] ChangeFOV changeFOV;
+
     CharacterController characterController;
 
     [SerializeField] Animator animator;
@@ -43,6 +45,13 @@ public class FPSController : MonoBehaviour
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedZ = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
+
+        if(isRunning) {
+            changeFOV.SmoothChangeFOV(90, .15f);
+        } else {
+            changeFOV.SmoothChangeFOV(60, .2f);
+        }
+
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedZ);
 
