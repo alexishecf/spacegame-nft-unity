@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController)), RequireComponent(typeof(LivingEntity))]
 public class FPSController : MonoBehaviour
 {
     [SerializeField] float walkingSpeed = 7.5f;
@@ -12,15 +13,17 @@ public class FPSController : MonoBehaviour
     float maxSpeed;
 
     [SerializeField] float gravity = 20.0f;
-    [SerializeField] Camera playerCamera;
+    Camera playerCamera;
     [SerializeField] float lookSpeed = 2.0f;
     [SerializeField] float lookXLimit = 45.0f;
 
-    [SerializeField] ChangeFOV changeFOV;
+    ChangeFOV changeFOV;
 
     CharacterController characterController;
+    LivingEntity livingEntity;
 
-    [SerializeField] Animator animator;
+
+    Animator animator;
 
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
@@ -29,12 +32,25 @@ public class FPSController : MonoBehaviour
 
     void Start()
     {
-        characterController = GetComponent<CharacterController>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         maxSpeed = Mathf.Max(walkingSpeed, runningSpeed);
+
+        SetReferences(null, null);
+
+        if (!animator)
+            livingEntity.ModelSpawned += SetReferences;
+    }
+
+    void SetReferences(object sender, EventArgs e)
+    {
+        livingEntity ??= GetComponent<LivingEntity>();
+        playerCamera ??= GetComponentInChildren<Camera>();
+        characterController ??= GetComponent<CharacterController>();
+        changeFOV ??= GetComponentInChildren<ChangeFOV>();
+        animator = livingEntity?.Model ? livingEntity.Model.Animator : null;
     }
 
     void Update()
@@ -46,9 +62,12 @@ public class FPSController : MonoBehaviour
         float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedZ = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
 
-        if(isRunning) {
+        if (isRunning)
+        {
             changeFOV.SmoothChangeFOV(90, .15f);
-        } else {
+        }
+        else
+        {
             changeFOV.SmoothChangeFOV(60, .2f);
         }
 
@@ -59,7 +78,8 @@ public class FPSController : MonoBehaviour
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
             moveDirection.y = jumpSpeed;
-            animator.SetTrigger("jumping");
+            if (animator)
+                animator.SetTrigger("jumping");
         }
         else
         {
@@ -74,7 +94,7 @@ public class FPSController : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
-      
+
 
         // Move the controller
         characterController.Move(moveDirection * Time.deltaTime);
@@ -93,6 +113,9 @@ public class FPSController : MonoBehaviour
 
     void UpdateAnimatorParameters(float velocityX, float velocityZ)
     {
+        if (!animator)
+            return;
+
         animator.SetFloat("velocityX", velocityX);
         animator.SetFloat("velocityZ", velocityZ);
     }
