@@ -1,0 +1,42 @@
+:root {
+    background-color: rgba(29, 66, 82, 0.91);
+    border-left-color: rgba(237, 241, 255, 0.9);
+    border-right-color: rgba(237, 241, 255, 0.9);
+    border-top-color: rgba(237, 241, 255, 0.9);
+    border-bottom-color: rgba(237, 241, 255, 0.9);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    flex-basis: 3px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: 800px;
+    max-height: 400px;
+}
+
+.content {
+    padding:5px;
+    width:100%;
+}
+
+.titleBar {
+    background-color: rgba(0, 0, 0, 0.14);
+    padding: 6px 4px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom:5px;
+}
+
+#unity-text-input {
+    background-color:rgba(0,0,0,0.2);
+    border-left-color: rgba(0,0,0, 0.3);
+    border-right-color: rgba(0,0,0, 0.3);
+    border-top-color: rgba(0,0,0, 0.3);
+    border-bottom-color: rgba(0,0,0, 0.3);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    color:rgba(255,255,255,0.5);
+}

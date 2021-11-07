@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="USS/Style.uss" />
+    <ui:VisualElement name="Header" class="titleBar" style="height: 30px; position: absolute; width: 100%;">
+        <ui:Label text="Developer UI" display-tooltip-when-elided="false" enable-rich-text="false" style="font-size: 14px; height: 20px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Container" class="content" style="width: 100%; height: 284px; max-width: none; max-height: none; min-width: auto; min-height: auto; top: 30px; position: relative;">
+        <ui:Foldout text="&lt;b&gt;Console&lt;/b&gt;" value="false" name="ConsoleFoldout" focusable="false">
+            <ui:VisualElement style="width: 99%; height: auto;">
+                <ui:TextField picking-mode="Ignore" readonly="true" multiline="true" value="testataf" text="test" style="height: 129px;" />
+                <ui:TextField picking-mode="Ignore" readonly="false" multiline="false" text="tetaff" style="height: 27px;" />
+            </ui:VisualElement>
+        </ui:Foldout>
+        <ui:Foldout text="Spawner" name="SpawnerFoldout" value="false" />
+        <ui:Foldout text="Network" name="Network">
+            <ui:Label text="State: &lt;color=#ff4455&gt;not hosting / not connected" display-tooltip-when-elided="true" name="ConnectionState" />
+            <ui:Label text="Address: localhost" display-tooltip-when-elided="true" name="Address" />
+            <ui:Label text="Port: 15621" display-tooltip-when-elided="true" name="Port" />
+            <ui:Label text="Connections: 0" display-tooltip-when-elided="true" name="Port" />
+        </ui:Foldout>
+    </ui:VisualElement>
+</ui:UXML>
